@@ -16,7 +16,7 @@ import argparse
 
 
 # @app.route("/analyse/imgrecognition", methods=['POST'])
-def analyse_sentiment(filepath):
+def analyse_sentiment(file):
     # filepath = request.get_json()['filepath']
 
     # define a dictionary that maps model names to their classes
@@ -50,7 +50,7 @@ def analyse_sentiment(filepath):
     # the image is resized to `inputShape`, the required input dimensions
     # for the ImageNet pre-trained network
     print("[INFO] loading and pre-processing image...")
-    image = load_img(filepath, target_size=inputShape)
+    image = load_img(file, target_size=inputShape)
     image = img_to_array(image)
 
     # our input image is now represented as a NumPy array of shape
@@ -72,10 +72,7 @@ def analyse_sentiment(filepath):
         finalProb = "{}".format(prob * 100)
         break
 
-    return jsonify(
-        result=result,
-        prob=finalProb
-    )
+    return (result, finalProb)
 
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', port=5000)
